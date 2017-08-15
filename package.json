@@ -1,0 +1,7 @@
+{
+  "name": "mn-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>"
+}
