@@ -3,5 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>"
+  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
+  "scripts": {
+    "start": "neutrino start --use neutrino-preset-node",
+    "start-debug": "neutrino start --use neutrino-preset-node --debug",
+    "test": "neutrino test --use neutrino-preset-node neutrino-preset-jest",
+    "build": "neutrino build --use neutrino-preset-node"
+  },
+  "dependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-prettier": "^2.3.0",
+    "express": "^4.15.4",
+    "express-graphql": "^0.6.7",
+    "graphql": "^0.10.5",
+    "neutrino": "^6.1.5",
+    "neutrino-preset-jest": "^6.1.5",
+    "neutrino-preset-node": "^6.1.5",
+    "prettier": "^1.5.3",
+    "source-map-support": "^0.4.15"
+  }
 }
