@@ -1,25 +1,70 @@
 {
   "name": "mn-server",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "license": "MIT",
-  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
-  "scripts": {
-    "start": "neutrino start --use neutrino-preset-node",
-    "start-debug": "neutrino start --use neutrino-preset-node --debug",
-    "test": "neutrino test --use neutrino-preset-node neutrino-preset-jest",
-    "build": "neutrino build --use neutrino-preset-node"
-  },
   "dependencies": {
-    "eslint": "^4.4.1",
-    "eslint-config-prettier": "^2.3.0",
-    "express": "^4.15.4",
-    "express-graphql": "^0.6.7",
-    "graphql": "^0.10.5",
-    "neutrino": "^6.1.5",
-    "neutrino-preset-jest": "^6.1.5",
-    "neutrino-preset-node": "^6.1.5",
-    "prettier": "^1.5.3",
-    "source-map-support": "^0.4.15"
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.15.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.1",
+    "express-graphql": "^0.6.11",
+    "express-validator": "^4.2.1",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt-nodejs": "0.0.30",
+    "@types/body-parser": "^1.16.5",
+    "@types/dotenv": "^4.0.1",
+    "@types/express": "^4.0.37",
+    "concurrently": "^3.5.0",
+    "jest": "^21.2.1",
+    "nodemon": "^1.12.1",
+    "prettier": "^1.7.4",
+    "ts-jest": "^21.1.0",
+    "tslint": "^5.7.0",
+    "tslint-config-prettier": "^1.5.0",
+    "typescript": "^2.5.3"
+  },
+  "scripts": {
+    "start": "npm run build && npm run watch",
+    "build": "npm run build-ts && npm run tslint",
+    "serve": "nodemon build/index.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
+    "test": "jest --forceExit",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect build/index.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcusnielsen/mn-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcusnielsen/mn-server/issues"
+  },
+  "homepage": "https://github.com/marcusnielsen/mn-server#readme",
+  "jest": {
+    "globals": {
+      "__TS_CONFIG__": "tsconfig.json"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "./node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "**/test/**/*.test.(ts|js)"
+    ],
+    "testEnvironment": "node"
   }
 }
