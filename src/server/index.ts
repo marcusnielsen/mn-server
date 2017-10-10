@@ -1,4 +1,4 @@
-export default ({ config, server }: { config: any; server: any }) => {
+export default ({ config, server }) => {
   const onListen = () => {
     // tslint:disable-next-line:no-console
     console.log(`Listening on port ${config.MN_SERVER_PORT}`);
