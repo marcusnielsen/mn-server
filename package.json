@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "amqplib": "^0.5.1",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.15.2",
     "dotenv": "^4.0.0",
@@ -14,6 +15,7 @@
     "request": "^2.83.0"
   },
   "devDependencies": {
+    "@types/amqplib": "^0.5.4",
     "@types/bcrypt-nodejs": "0.0.30",
     "@types/body-parser": "^1.16.5",
     "@types/dotenv": "^4.0.1",
