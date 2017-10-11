@@ -1,13 +1,6 @@
 
 # Created by https://www.gitignore.io/api/node,code
 
-### Code ###
-# Visual Studio Code - https://code.visualstudio.com/
-.settings/
-.vscode/
-tsconfig.json
-jsconfig.json
-
 ### Node ###
 # Logs
 logs
