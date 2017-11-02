@@ -1,10 +1,8 @@
-import * as Express from "express";
-import makeAmqp from "./amqp";
-import makeConfig from "./config";
-import runServer from "./server";
+import * as Express from 'express'
+import makeAmqp from './amqp'
+import { makeProvider } from './provider'
 
-const config = makeConfig({ prefix: "MN_", envVars: process.env });
-const amqp = makeAmqp(config);
-const server = Express();
+const envVars = process.env
+const { run } = makeProvider({ envVars })
 
-runServer({ config, server, amqp });
+run()

@@ -1,16 +1,15 @@
-const makeFilterPrefixedKeys = prefix => ([key, value]) =>
-  key.startsWith(prefix);
+const makeFilterPrefixedKeys = prefix => ([key]) => key.startsWith(prefix)
 
 const reduceEntriesToObject = (acc, [key, val]) => ({
   [key]: val,
-  ...acc
-});
+  ...acc,
+})
 
-const envVarToConfig = (prefix, envVars) => ({
+const envVarToConfig = ({ prefix, noneString, envVars }) => ({
   NODE_ENV: envVars.NODE_ENV,
   ...Object.entries(envVars)
     .filter(makeFilterPrefixedKeys(prefix))
-    .reduce(reduceEntriesToObject, {})
-});
+    .reduce(reduceEntriesToObject, {}),
+})
 
-export default envVarToConfig;
+export default envVarToConfig

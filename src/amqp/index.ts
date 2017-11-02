@@ -1,36 +1,36 @@
-import * as amqplib from "amqplib";
+import * as amqplib from 'amqplib'
 
 const exchanges = [
-  { notifications: ["admin", "user"] },
-  { events: ["system", "admin", "user"] }
-];
+  { notifications: ['admin', 'user'] },
+  { events: ['system', 'admin', 'user'] },
+]
 
-const q = "hello";
+const q = 'hello'
 
 const makeAmqp = config => {
   const amqp = amqplib
     .connect(config.MN_AMQP_CONNECTION)
     .then(conn => {
-      process.once("SIGINT", () => {
-        conn.close();
-      });
+      process.once('SIGINT', () => {
+        conn.close()
+      })
 
-      return conn.createChannel();
+      return conn.createChannel()
     })
     .then(channel => {
-      channel.assertQueue(q, { durable: false });
+      channel.assertQueue(q, { durable: false })
       // Note: on Node 6 Buffer.from(msg) should be used
-      channel.sendToQueue(q, Buffer.from("Hello World!"));
+      channel.sendToQueue(q, Buffer.from('Hello World!'))
       // tslint:disable-next-line:no-console
-      console.log("[x] Sent 'Hello World!'");
-      return channel;
+      console.log("[x] Sent 'Hello World!'")
+      return channel
     })
     .then(channel =>
       channel.consume(
         q,
         msg => {
           // tslint:disable-next-line:no-console
-          console.log(" [x] Received %s", msg ? msg.content : msg);
+          console.log('[x] Received %s', msg ? msg.content : msg)
         },
         { noAck: true }
       )
@@ -67,7 +67,7 @@ const makeAmqp = config => {
     // .then(channel => {
 
     // })
-    .catch(console.error);
-};
+    .catch(console.error)
+}
 
-export default makeAmqp;
+export default makeAmqp

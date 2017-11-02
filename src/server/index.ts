@@ -1,8 +1,12 @@
-export default ({ config, server, amqp }) => {
-  const onListen = () => {
-    // tslint:disable-next-line:no-console
-    console.log(`Listening on port ${config.MN_SERVER_PORT}`);
-  };
+const listen = (port: number, handler, server) => server.listen(port, handler)
 
-  server.listen(config.MN_SERVER_PORT, onListen);
-};
+const onListen = port => serverInfo => {
+  // tslint:disable-next-line:no-console
+  console.log(`Server listening on port ${port}`)
+}
+
+export default ({ config, server, amqp }) => {
+  const { MN_SERVER_PORT } = config
+
+  listen(MN_SERVER_PORT, onListen(MN_SERVER_PORT), server)
+}
