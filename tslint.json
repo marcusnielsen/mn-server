@@ -6,5 +6,8 @@
     "arrow-parens": false,
     "trailing-comma": true
   },
+  "env": {
+    "jest": true
+  },
   "rulesDirectory": []
 }

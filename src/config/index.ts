@@ -3,8 +3,8 @@
 // Be embarrassed for a while, and then refactor.
 
 import * as dotenv from 'dotenv'
-import envVarToConfig from './env-var-to-config'
-import readMandatoryKeys from './read-mandatory-keys'
+import { envVarToConfig } from './env-var-to-config'
+import { readMandatoryEnvVarKeys } from './read-mandatory-keys'
 
 const makeFilterMissingKeys = obj => key => !obj[key]
 
@@ -14,11 +14,14 @@ const makeFilterMissingKeys = obj => key => !obj[key]
 export const makeConfig = props => {
   dotenv.config()
   const { prefix, noneString, envVars } = props
-  const config = envVarToConfig({ prefix, noneString, envVars })
-  const mandatoryKeys = readMandatoryKeys()
-  const missingKeys = mandatoryKeys.filter(makeFilterMissingKeys(config))
+  const configWithNoneStrings = envVarToConfig({ prefix, noneString, envVars })
+  const mandatoryKeys = readMandatoryEnvVarKeys()
+  const missingKeys = mandatoryKeys.filter(
+    makeFilterMissingKeys(configWithNoneStrings)
+  )
   const mandatoryKeyMissing = missingKeys.length > 0
-  const envVarKeysTooMany = Object.keys(config).length > mandatoryKeys.length
+  const envVarKeysTooMany =
+    Object.keys(configWithNoneStrings).length > mandatoryKeys.length
 
   if (mandatoryKeyMissing) {
     throw new Error(`Missing these env vars in config: ${missingKeys}.`)
@@ -26,14 +29,17 @@ export const makeConfig = props => {
 
   if (envVarKeysTooMany) {
     throw new Error(`
-      Config key count is ${Object.keys(config).length}.
+      Config key count is ${Object.keys(configWithNoneStrings).length}.
       Mandatory key count is ${mandatoryKeys.length}.
       Config should not provide unused keys.
       Check your environment variables for any unused keys.
     `)
   }
 
-  // @TODO: Remove all entries with value === noneString
+  const config = Object.entries(configWithNoneStrings).reduce(
+    (acc, [key, val]) => ({ ...acc, [key]: val === noneString ? null : val }),
+    {}
+  )
 
   return config
 }

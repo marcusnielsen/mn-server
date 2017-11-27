@@ -1,28 +1,23 @@
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express'
 import * as bodyParser from 'body-parser'
 import { makeExecutableSchema } from 'graphql-tools'
+import { makeUser } from '../components/user'
 
-export const makeGraphqlServer = ({ server }) => {
-  const typeDefs = [
-    `
-      type Query {
-        hello: String
-      }
+export const makeGraphqlServer = ({ connectors, server }) => {
+  const user = makeUser({ connectors })
 
-      schema {
-        query: Query
-    }`,
-  ]
+  const typeDefs = [user.typeDefs]
 
   const resolvers = {
-    Query: {
-      hello(root) {
-        return 'world'
-      },
-    },
+    ...user.resolvers,
   }
 
-  const schema = makeExecutableSchema({ typeDefs, resolvers })
+  const schema = makeExecutableSchema({
+    allowUndefinedInResolve: false,
+    resolvers,
+    typeDefs,
+  })
+
   server.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
   server.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 }
