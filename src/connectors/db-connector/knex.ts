@@ -13,13 +13,15 @@ export function makeKnex({ host, user, password, database }) {
   })
 
   // @TODO: Figure out how to make this work with async await or Promises.
-  knex.migrate
-    .rollback()
-    .then(() => knex.migrate.latest())
-    .then(() => knex.seed.run())
-    .then(() => knex)
-    // tslint:disable-next-line:no-console
-    .catch(e => console.error(e) && process.exit(1))
+  if (process.env.NODE_ENV !== 'test') {
+    knex.migrate
+      .rollback()
+      .then(() => knex.migrate.latest())
+      .then(() => knex.seed.run())
+      .then(() => knex)
+      // tslint:disable-next-line:no-console
+      .catch(e => console.error(e) && process.exit(1))
+  }
 
   return knex
 }

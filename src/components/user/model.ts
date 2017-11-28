@@ -1,14 +1,14 @@
-const makeGetUsers = ({ effect, endpoints, actions }) => () =>
-  effect({ endpoint: endpoints.users.root, action: actions.get })
+const makeGetUsers = ({ effect, endpoints }) => () =>
+  effect({ endpoint: endpoints.users.getUsers })
 
-const makeGetProfile = ({ effect, endpoints, actions }) => data =>
-  effect({ endpoint: endpoints.users.profile, action: actions.get, data })
+const makeGetUserProfile = ({ effect, endpoints }) => data =>
+  effect({ endpoint: endpoints.users.getUserProfile, data })
 
 export const makeModel = props => {
   const { connector } = props
 
   return {
-    getProfile: makeGetProfile(connector),
+    getUserProfile: makeGetUserProfile(connector),
     getUsers: makeGetUsers(connector),
   }
 }

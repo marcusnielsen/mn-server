@@ -15,7 +15,7 @@ export const makeResolvers = ({ model }) => ({
     },
   },
   Query: {
-    profile: (_, { id }) => model.getProfile({ id }),
+    profile: (_, { id }) => model.getUserProfile({ id }),
     users: () => model.getUsers(),
   },
 })

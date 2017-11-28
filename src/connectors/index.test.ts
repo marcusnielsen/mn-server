@@ -9,9 +9,24 @@ test('makeConnectors', () => {
   })
   const { dbConnector } = makeConnectors(config)
 
-  const { actions, endpoints, effect } = dbConnector
+  const { endpoints, effect } = dbConnector
 
-  effect({ endpoint: endpoints.users.root, action: actions.get, data: null })
-
-  expect(true).toEqual(false)
+  return effect({
+    data: null,
+    endpoint: endpoints.users.getUsers,
+  }).then(data => {
+    expect(data).toEqual([
+      { createdAt: '2017-11-27T22:55:20.551Z', email: 'mn@example.com', id: 1 },
+      {
+        createdAt: '2017-11-27T22:55:20.551Z',
+        email: 'mn2@example.com',
+        id: 2,
+      },
+      {
+        createdAt: '2017-11-27T22:55:20.551Z',
+        email: 'mn3@example.com',
+        id: 3,
+      },
+    ])
+  })
 })
