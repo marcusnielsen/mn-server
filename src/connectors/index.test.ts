@@ -15,17 +15,15 @@ test('makeConnectors', () => {
     data: null,
     endpoint: endpoints.users.getUsers,
   }).then(data => {
-    expect(data).toEqual([
-      { createdAt: '2017-11-27T22:55:20.551Z', email: 'mn@example.com', id: 1 },
+    const emails = data.map(({ email }) => ({ email }))
+
+    expect(emails).toEqual([
+      { email: 'mn@example.com' },
       {
-        createdAt: '2017-11-27T22:55:20.551Z',
         email: 'mn2@example.com',
-        id: 2,
       },
       {
-        createdAt: '2017-11-27T22:55:20.551Z',
         email: 'mn3@example.com',
-        id: 3,
       },
     ])
   })
