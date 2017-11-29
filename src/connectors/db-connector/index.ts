@@ -1,7 +1,7 @@
 import { endpoints } from './endpoints'
 import { makeKnex } from './knex'
 
-const makeEffect = knex => ({ endpoint, data }) =>
+export const makeEffect = knex => ({ endpoint, data }) =>
   endpoint({
     data,
     knex,

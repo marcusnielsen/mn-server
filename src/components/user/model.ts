@@ -1,5 +1,7 @@
 const makeCreateUser = ({ effect, endpoints }) => data =>
-  effect({ endpoint: endpoints.users.createUser, data })
+  effect({ endpoint: endpoints.users.createUser, data }).then(() =>
+    effect({ endpoint: endpoints.users.getUserProfileByEmail, data })
+  )
 
 const makeGetUsers = ({ effect, endpoints }) => () =>
   effect({ endpoint: endpoints.users.getUsers })

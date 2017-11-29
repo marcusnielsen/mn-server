@@ -1,7 +1,5 @@
 export const createUser = ({ knex, data }) =>
-  knex
-    .raw('INSERT INTO users (email) VALUES(?)', data.email)
-    .then(() => getUserProfileByEmail({ knex, data }))
+  knex.raw('INSERT INTO users (email) VALUES(?)', data.email)
 
 export const getUsers = ({ knex, data }) =>
   knex.raw('SELECT * FROM users').then(({ rows }) =>
